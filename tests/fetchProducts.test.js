@@ -3,6 +3,8 @@ const { it } = require('eslint/lib/rule-tester/rule-tester');
 const { fetchProducts } = require('../helpers/fetchProducts');
 const computadorSearch = require('../mocks/search');
 
+// Alguns dos sites utilizados: https://jestjs.io/pt-BR/docs/expect#tohavebeencalled.
+
 describe('1 - Teste a função fecthProducts', () => {
   it('Teste se fetchItem é uma função', () => {
     expect(typeof fetchProducts).toBe('function')
