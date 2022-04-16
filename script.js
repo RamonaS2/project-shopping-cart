@@ -1,3 +1,5 @@
+const carrinho = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -29,8 +31,6 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  const carrinho = document.querySelector('.cart__items');
-
   carrinho.removeChild(event.target);
   }
 
@@ -75,5 +75,17 @@ const createList = async () => {
 };
 
  createList();
+
+ const exclui = () => {
+  const item = document.getElementsByClassName('cart__item');
+  for (let i = 0; i < item.length; i += 0) {
+      carrinho.removeChild(item[i]);
+  }
+  console.log('ola');
+ };
+
+ const botaoEsvazia = document.querySelector('.empty-cart');
+
+ botaoEsvazia.addEventListener('click', exclui);
 
 window.onload = () => { };
