@@ -40,6 +40,20 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+const adicioneIten = async (event) => {
+  const iten = getSkuFromProductItem(event.target.parentNode);
+  console.log(event.target.parentNode);
+  const resultRequi = await fetchItem(iten);
+  console.log(resultRequi);
+    const { id: sku, title: name, price: salePrice } = resultRequi;
+    const valores = { sku, name, salePrice };
+  
+    const itens = createCartItemElement(valores);
+    const pai = document.querySelector('.cart__items');
+  
+    pai.appendChild(itens);
+   };
+
 const createList = async () => {
   const resultadoRequi = await fetchProducts();
   const result = resultadoRequi.results;
@@ -51,6 +65,10 @@ const createList = async () => {
   const pai = document.querySelector('.items');
 
   pai.appendChild(product);
+  });
+  const botaoAddCarrinho = document.querySelectorAll('.item__add');
+  botaoAddCarrinho.forEach((el) => {
+    el.addEventListener('click', adicioneIten);
   });
 };
 
