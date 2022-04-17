@@ -1,5 +1,20 @@
 const carrinho = document.querySelector('.cart__items');
 
+const carregar = () => {
+  const paraCarregar = document.createElement('h2');
+  paraCarregar.className = 'loading';
+  paraCarregar.innerText = 'carregando...';
+  const catagalo = document.querySelector('.container');
+
+  catagalo.appendChild(paraCarregar);
+};
+
+const vaiEmbora = () => {
+  const paraCarregar = document.querySelector('.loading');
+  // const catagalo = document.querySelector('.container');
+  paraCarregar.remove();
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -32,6 +47,7 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   carrinho.removeChild(event.target);
+  saveCartItems(carrinho.innerHTML);
   }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -54,9 +70,11 @@ const adicioneIten = async (event) => {
     const pai = document.querySelector('.cart__items');
   
     pai.appendChild(itens);
+    saveCartItems(carrinho.innerHTML);
    };
 
 const createList = async () => {
+   carregar();
   const resultadoRequi = await fetchProducts();
   const result = resultadoRequi.results;
   result.forEach((element) => {
@@ -68,6 +86,7 @@ const createList = async () => {
 
   pai.appendChild(product);
   });
+  vaiEmbora();
   const botaoAddCarrinho = document.querySelectorAll('.item__add');
   botaoAddCarrinho.forEach((el) => {
     el.addEventListener('click', adicioneIten);
@@ -81,11 +100,17 @@ const createList = async () => {
   for (let i = 0; i < item.length; i += 0) {
       carrinho.removeChild(item[i]);
   }
-  console.log('ola');
+  saveCartItems(carrinho.innerHTML);
  };
 
  const botaoEsvazia = document.querySelector('.empty-cart');
 
  botaoEsvazia.addEventListener('click', exclui);
 
-window.onload = () => { };
+window.onload = () => { 
+  getSavedCartItems();
+  const itens = document.querySelectorAll('.cart__item');
+  itens.forEach((el) => {
+    el.addEventListener('click', cartItemClickListener);
+  });
+};
